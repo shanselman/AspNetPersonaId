@@ -68,7 +68,7 @@
             signoutLink.onclick = function () { navigator.id.logout(); };
         };
 
-        var currentUser = 'scott@hanselman.com';
+        var currentUser = "scott@hanselman.com"; /* or email */
 
         navigator.id.watch({
             loggedInUser: currentUser,
@@ -90,7 +90,7 @@
                 $.ajax({
                     type: 'POST',
                     url: '/api/persona/logout', // This is a URL on your website.
-                    success: function (res, status, xhr) { /* window.location.reload(); */ },
+                    success: function (res, status, xhr) { window.location.reload(); },
                     error: function (res, status, xhr) { alert("logout failure" + res); }
                 });
             }

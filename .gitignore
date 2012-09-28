@@ -2,6 +2,7 @@
 bin
 obj
 Packages
+*.suo
 
 # mstest test results
 TestResults
