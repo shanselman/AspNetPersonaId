@@ -8,6 +8,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace PersonaMVC4Example.Controllers
 {
@@ -24,6 +26,7 @@ namespace PersonaMVC4Example.Controllers
             }
             var cookies = Request.Headers.GetCookies();
             string token = cookies[0]["__RequestVerificationToken"].Value;
+            //TODO What do I do with this?
 
             using (var client = new HttpClient())
             {
@@ -39,6 +42,9 @@ namespace PersonaMVC4Example.Controllers
                 dynamic jsonresult = JsonConvert.DeserializeObject<dynamic>(stringresult);
                 if (jsonresult.status == "okay")
                 {
+                    string email = jsonresult.email;
+                    //WebSecurity.Login(email, "don't got one");
+                    FormsAuthentication.SetAuthCookie(email, false);
                     return new HttpResponseMessage(HttpStatusCode.OK);
                 }
             }
@@ -48,6 +54,7 @@ namespace PersonaMVC4Example.Controllers
         [HttpPost][ActionName("logout")]
         public void Logout()
         {
+            WebSecurity.Logout();
         }
     }
 }

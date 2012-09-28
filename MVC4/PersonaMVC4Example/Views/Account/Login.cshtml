@@ -43,19 +43,14 @@
 <section class="social" id="socialLoginForm">
     <h2>Use another service to log in.</h2>
     @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-
-    <h2>Mozilla Persona (Example)</h2>
-    <p><a href="#" class="persona-button" id="personasignin"><span>Sign in with your Email</span></a></p>
-    <p><a href="#" class="persona-button" id="personasignout"><span>Sign out</span></a></p>
-    <!-- The CSS for this is in persona-buttons.css and is bundled in in BundleConfig.cs -->
-</section>
+ </section>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <!-- 
         Script from https://developer.mozilla.org/en-US/docs/Persona/Quick_Setup 
-        Should be moved into its own JavaScript 
+        NEEDED FOR PERSONA - Should be moved into its own JavaScript 
     -->
     <script>
         var signinLink = document.getElementById('personasignin');

@@ -17,7 +17,17 @@ else
         <p>
         @foreach (AuthenticationClientData p in Model)
         {
+            if(p.AuthenticationClient.ProviderName == "Persona") //ya, ya, I know. I wanted cool buttons
+            {
+               if (Request.IsAuthenticated) {
+                <p><a href="#" class="persona-button" id="personasignout"><span>Sign out</span></a></p>
+                } else {
+                <p><a href="#" class="persona-button" id="personasignin"><span>Sign in with your Email</span></a></p>
+                }
+                <!-- The CSS for this is in persona-buttons.css and is bundled in in BundleConfig.cs -->  
+            }else{
             <button type="submit" name="provider" value="@p.AuthenticationClient.ProviderName" title="Log in using your @p.DisplayName account">@p.DisplayName</button>
+            }
         }
         </p>
     </fieldset>

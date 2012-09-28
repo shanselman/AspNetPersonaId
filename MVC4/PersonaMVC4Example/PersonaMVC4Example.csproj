@@ -168,6 +168,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PersonaAuthenticationClient.cs" />
     <Compile Include="ModelBinders\SimplePostVariableParameterBinding.cs" />
     <Compile Include="ModelBinders\SimplePostVariableParameterBindingAttribute.cs" />
     <Compile Include="Models\AccountModels.cs" />
