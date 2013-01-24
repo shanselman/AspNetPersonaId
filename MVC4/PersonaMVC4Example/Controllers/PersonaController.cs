@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Web.WebPages.OAuth;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using PersonaMVC4Example.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +45,36 @@ namespace PersonaMVC4Example.Controllers
                 if (jsonresult.status == "okay")
                 {
                     string email = jsonresult.email;
-                    //WebSecurity.Login(email, "don't got one");
+
+                    string userName = null;
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        userName = User.Identity.Name;
+                    }
+                    else
+                    {
+                        userName = OAuthWebSecurity.GetUserName("Persona", email);
+                        if (userName == null)
+                        {
+                            userName = email; // TODO: prompt for user name
+                            using (UsersContext db = new UsersContext())
+                            {
+                                UserProfile user = db.UserProfiles.FirstOrDefault(u => u.UserName.ToLower() == userName.ToLower());
+                                // Check if user already exists
+                                if (user == null)
+                                {
+                                    // Insert name into the profile table
+                                    db.UserProfiles.Add(new UserProfile { UserName = userName });
+                                    db.SaveChanges();
+
+                                }
+                            }
+                        }
+                    }
+
+                    OAuthWebSecurity.CreateOrUpdateAccount("Persona", email, userName);
+
+
                     FormsAuthentication.SetAuthCookie(email, false);
                     return new HttpResponseMessage(HttpStatusCode.OK);
                 }
