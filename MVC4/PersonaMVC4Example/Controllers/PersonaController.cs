@@ -15,7 +15,6 @@ using WebMatrix.WebData;
 
 namespace PersonaMVC4Example.Controllers
 {
-    //[SimplePostVariableParameterBinding]
     [HttpHeaderAntiForgeryTokenAttribute]
     public class PersonaController : ApiController
     {
