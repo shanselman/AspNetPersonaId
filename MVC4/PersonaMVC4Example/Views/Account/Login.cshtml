@@ -56,9 +56,12 @@
         function onAssertion(assertion) {
             if (assertion) {
                 $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
+                    headers: { // Pass the Token in a header value.
+                        '__RequestVerificationToken': $("input[name='__RequestVerificationToken']").val()
+                    },
                     type: 'POST',
-                    url: '/api/persona/login', // This is a URL on your website.
-                    data: { assertion: assertion, },
+                    url: '/api/persona/login',   // This is a URL on your website.
+                    data: { '': assertion, },    //Use this format to make it work with the [FromBody] WebApi Attribute http://www.asp.net/web-api/overview/working-with-http/sending-html-form-data,-part-1
                     success: function (res, status, xhr) { window.location.reload(); },
                     error: function (res, status, xhr) { alert("login failure" + res); }
                 });
