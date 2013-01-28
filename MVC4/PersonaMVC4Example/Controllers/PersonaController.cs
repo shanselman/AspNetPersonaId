@@ -35,8 +35,7 @@ namespace PersonaMVC4Example.Controllers
                 var content = new FormUrlEncodedContent(
                         new Dictionary<string, string> {
                             { "assertion", assertion },
-                            { "audience", HttpContext.Current.Request.Url.Host } 
-                            //TODO: Can I get this without HttpContext.Current?
+                            { "audience", Request.Url.Host },
                         }
                     );
                 var result = await client.PostAsync("https://verifier.login.persona.org/verify", content);
