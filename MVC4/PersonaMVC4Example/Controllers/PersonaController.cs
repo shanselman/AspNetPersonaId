@@ -15,20 +15,17 @@ using WebMatrix.WebData;
 
 namespace PersonaMVC4Example.Controllers
 {
-    [SimplePostVariableParameterBinding]
+    [HttpHeaderAntiForgeryTokenAttribute]
     public class PersonaController : ApiController
     {
         // POST api/persona
         [HttpPost][ActionName("login")]
-        public async Task<HttpResponseMessage> Login(string assertion)
+        public async Task<HttpResponseMessage> Login([FromBody] string assertion)
         {
             if (assertion == null)
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
-            var cookies = Request.Headers.GetCookies();
-            string token = cookies[0]["__RequestVerificationToken"].Value;
-            //TODO What do I do with this?
 
             using (var client = new HttpClient())
             {
@@ -39,6 +36,7 @@ namespace PersonaMVC4Example.Controllers
                         }
                     );
                 var result = await client.PostAsync("https://verifier.login.persona.org/verify", content);
+                result.EnsureSuccessStatusCode();
                 var stringresult = await result.Content.ReadAsStringAsync();
                 dynamic jsonresult = JsonConvert.DeserializeObject<dynamic>(stringresult);
                 if (jsonresult.status == "okay")
