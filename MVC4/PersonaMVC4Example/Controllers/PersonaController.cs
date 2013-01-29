@@ -36,6 +36,7 @@ namespace PersonaMVC4Example.Controllers
                         }
                     );
                 var result = await client.PostAsync("https://verifier.login.persona.org/verify", content);
+                result.EnsureSuccessStatusCode();
                 var stringresult = await result.Content.ReadAsStringAsync();
                 dynamic jsonresult = JsonConvert.DeserializeObject<dynamic>(stringresult);
                 if (jsonresult.status == "okay")
